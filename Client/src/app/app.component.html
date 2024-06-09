@@ -1,0 +1,23 @@
+
+<div class="container">
+    <h2>List of users</h2>
+    <table class="table" *ngIf="users">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+            </tr>
+            <tr *ngFor="let user of users">
+                <td>{{user.firstName}} {{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.username}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<app-footer></app-footer>
