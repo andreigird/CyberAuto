@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/API/appsettings.json
+/API/appsettings.Development.json
+/API/CyberAuto.db
+/API/CyberAuto.db-shm
+/API/CyberAuto.db-wal
+/API/Properties/launchSettings.json
+/Client/tsconfig.json
