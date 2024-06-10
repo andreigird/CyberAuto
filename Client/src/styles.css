@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+body {
+  background-color: #EFEFEF;
+  color: #121113;
+}
+
+.phone-number {
+  color: #EFEFEF;
+  font-weight: 700;
+}
+
+  .phone-number:hover {
+    color: #38C0DB;
+  }
+.mailbox {
+  color: #EFEFEF;
+  font-weight: 700;
+}
+
+  .mailbox:hover {
+    color: #38C0DB;
+  }
+
+::selection {
+  color: #EFEFEF;
+  background: #38C0DB;
+}
+
+

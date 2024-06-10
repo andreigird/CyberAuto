@@ -1,0 +1,13 @@
+@import "../app.component.css";
+
+.navbar-text {
+    color: red;
+}
+
+span{
+    color:red;
+}
+
+i:hover {
+  color: #38C0DB;
+}

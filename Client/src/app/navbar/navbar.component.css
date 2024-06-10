@@ -1,0 +1,9 @@
+@import "../app.component.css";
+
+
+a {
+  text-decoration: none;
+}
+.navbar-custom {
+  background-color: #121113 !important;
+}

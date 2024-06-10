@@ -368,3 +368,10 @@ FodyWeavers.xsd
 /API/CyberAuto.db-wal
 /API/Properties/launchSettings.json
 /Client/tsconfig.json
+/Client/ssl/localhost-key.pem
+/Client/ssl/localhost.pem
+/Client/karma.conf.js
+/Client/aspnetcore-https.js
+/Client/angular.json
+/Client/nuget.config
+/Client/package.json
