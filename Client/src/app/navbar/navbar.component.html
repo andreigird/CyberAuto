@@ -13,9 +13,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                    <a class="nav-link " href="#" tabindex="-1" aria-disabled="true" [ngClass]="loggedIn?'':'disabled'">
                         <i class="bi bi-car-front-fill"></i>
-                        Masinile mele</a>
+                        Masinile mele
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1">
@@ -31,9 +32,12 @@
                 </li>
 
             </ul>
-            <form class="d-flex">
+            <form class="d-flex" *ngIf="!loggedIn">
                 <button class="btn btn-success me-2" type="submit" routerLink='login'>Autentificare</button>
                 <button class="btn btn-outline-info" type="submit">Inregistrare</button>
+            </form>
+            <form class="d-flex" *ngIf="loggedIn">
+                <button class="btn btn-danger me-2" type="submit" routerLink='login' (click)="logout()">Logout</button>               
             </form>
         </div>
     </div>
