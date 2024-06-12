@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { Observable, of } from 'rxjs';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +11,14 @@ import { AccountService } from '../_services/account.service';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-  loggedIn = false;
-
+  user: any;
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
 
   ngOnInit(): void {
-    this.getCurrentUser();
+    this.accountService.currentUser$.subscribe(res => this.user = res);
+    console.log(this.user);
+
   }
 
   login() {
@@ -23,7 +26,8 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.model).subscribe({
       next: response => {
         console.log(response);
-        this.loggedIn = true;
+        this.accountService.currentUser$.subscribe(res => this.user = res);
+        console.log(this.user);
       },
       error: error => console.log(error)
     })
@@ -33,10 +37,5 @@ export class LoginComponent implements OnInit {
     this.accountService.logout();
   }
 
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: user => this.loggedIn = !!user,
-      error: error => console.log(error)
-    })
-  }
+ 
 }

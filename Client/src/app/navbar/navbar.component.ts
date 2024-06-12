@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AccountService } from '../_services/account.service';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavbarComponent {
   loggedIn: boolean = false;
+  user: User | undefined;
 
   constructor(private accountService: AccountService) { }
 
@@ -18,7 +20,7 @@ export class NavbarComponent {
   }
   getCurrentUser() {
     this.accountService.currentUser$.subscribe({
-      next: user => this.loggedIn = !!user,
+      next: user => { this.loggedIn = !!user; if (!user) return; this.user = user },
       error: error => console.log(error)
     })
   }

@@ -37,7 +37,16 @@
                 <button class="btn btn-outline-info" type="submit">Inregistrare</button>
             </form>
             <form class="d-flex" *ngIf="loggedIn">
-                <button class="btn btn-danger me-2" type="submit" routerLink='login' (click)="logout()">Logout</button>               
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="bi bi-emoji-heart-eyes-fill"></i>
+                            Bine ai venit, {{user?.firstName}}!
+                        </a>
+                    </li>
+
+                </ul>
+                <button class="btn btn-danger me-2" type="submit" routerLink='login' (click)="logout()">Logout</button>
             </form>
         </div>
     </div>
@@ -46,7 +55,7 @@
 
 
 
-<!-- 
+<!--
 <div class="sidebar-header">
     <h3>Bootstrap Sidebar</h3>
 </div>
