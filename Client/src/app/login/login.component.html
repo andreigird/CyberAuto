@@ -1,5 +1,6 @@
 <div class="d-flex justify-content-center ">
-    <form style="width:300px" #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off" *ngIf="!(user)">
+    <h2>Logged in as: {{user?.firstName}}</h2>
+    <form style="width:300px" #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off" *ngIf="!user">
         <img class="mb-4" src="../../assets/logo/CyberAuto.png" alt="" width="128" height="128">
         <h1 class="h3 mb-3 fw-normal">Autentificati-va</h1>
 

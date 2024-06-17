@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AccountService } from '../_services/account.service';
 import { User } from '../_models/user';
+import { map, pipe, take } from 'rxjs';
+import { UserCredentials } from '../_models/userCredentials';
 
 @Component({
   selector: 'app-navbar',
@@ -11,19 +13,25 @@ import { User } from '../_models/user';
 })
 export class NavbarComponent {
   loggedIn: boolean = false;
-  user: User | undefined;
+  userCredentials: UserCredentials | undefined;
+  user: User | null = null;
 
-  constructor(private accountService: AccountService) { }
+  isCollapsed = false;
 
-  ngOnInit() {
-    this.getCurrentUser();
-  }
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: user => { this.loggedIn = !!user; if (!user) return; this.user = user },
-      error: error => console.log(error)
+  constructor(private accountService: AccountService) {
+    this.accountService.loggedUser$.pipe(take(1)).subscribe({
+      next: user => this.user = user
     })
   }
+  //ngOnInit() {
+  //  this.getCurrentUser();
+  //}
+  //getCurrentUser() {
+  //  if (!this.user) return;
+  //  this.accountService.getCurrentUser(this.user.username).subscribe({
+  //    next: user => this.user = user 
+  //  })
+  //}
 
   logout() {
     this.accountService.logout();

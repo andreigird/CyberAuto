@@ -15,6 +15,7 @@ import { routes } from './app.routes';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    CollapseModule.forRoot(),
     RouterModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),

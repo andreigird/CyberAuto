@@ -2,6 +2,8 @@
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -20,7 +22,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")] // POST: api/account/register
-        public async Task<ActionResult<UserDto>>
+        public async Task<ActionResult<UserCredentialsDto>>
             Register(RegisterDto registerDto)
         {
             if (await UsernameExists(registerDto.Username))
@@ -47,7 +49,7 @@ namespace API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new UserDto
+            return new UserCredentialsDto
             {
                 Username = user.Username,
                 Token = _tokenService.CreateToken(user)
@@ -55,7 +57,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserCredentialsDto>> Login(LoginDto loginDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == loginDto.Username || x.Email == loginDto.Username);
 
@@ -70,13 +72,28 @@ namespace API.Controllers
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
             }
 
-            return new UserDto
+            return new UserCredentialsDto
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 Username = user.Username,
                 Token = _tokenService.CreateToken(user)
             };
+        }
+
+        [Authorize]
+        [HttpGet("getUserDetails")]
+        public async Task<ActionResult<UserDto>> getUserDetails(string username)
+        {
+            var user = await _context.Users.FirstAsync(x => x.Username == username);
+            if (user == null) return BadRequest("Bad request;");
+            UserDto loggedUser = new UserDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Username = user.Username
+            };
+
+            return Ok(loggedUser);
         }
 
         public async Task<bool> UsernameExists(string username)

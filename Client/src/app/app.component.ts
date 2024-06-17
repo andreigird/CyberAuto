@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './_services/account.service';
+import { UserCredentials } from './_models/userCredentials';
 import { User } from './_models/user';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,28 +12,39 @@ import { User } from './_models/user';
 export class AppComponent implements OnInit {
   title = 'CyberAuto';
   
+  userCredentials: UserCredentials | undefined;
   user: User | undefined;
-  loggedIn: boolean = false;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
     this.setCurrentUser();
-    this.getCurrentUser();
+    this.setCurrentUserDetails();
+    this.getCurrentUserDetails();
   }
 
   setCurrentUser() {
     const userString = localStorage.getItem('user');
     if (!userString) return;
-    this.user = JSON.parse(userString);
-    if (!this.user) return;
-    this.accountService.setUser(this.user);
+    this.userCredentials = JSON.parse(userString);
+    if (!this.userCredentials) return;
+    this.accountService.setUser(this.userCredentials);
   }
 
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: user => this.loggedIn = !!user,
-      error: error => console.log(error)
-    })
+  setCurrentUserDetails() {   
+    const username: string | undefined = this.userCredentials?.username;
+    if (!username) return;
+
+    this.accountService.getLoggedUser(username);    
   }
+
+  getCurrentUserDetails() {
+    this.accountService.loggedUser$
+      .subscribe({
+        next: user => { console.log("We have user? " + user?.firstName); if (user) this.user = user; },
+        error: error => { console.log(error); }
+      })
+    console.log("The user taken from observable is: " + this.user);
+  }
+
 }
